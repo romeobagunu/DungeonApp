@@ -14,54 +14,61 @@ namespace Dungeon
         {
             bool isPlaying = true;
             bool isBattling = true;
+            bool isCustomizing = true;
+
             byte score = 0;
+
+            Console.WriteLine("Please enter your name...");
+            string playerName = Console.ReadLine();
+            Console.Clear();
+
+            Race playerRace = new Race();
+            Console.WriteLine("Welcome, " + playerName + "!\n");
+            do
+            {
+            Console.WriteLine("Please select a race:\n" +
+                "1) Human\n" +
+                "2) Elf\n" +
+                "3) Dwarf\n");
+            ConsoleKey raceChoice = Console.ReadKey(false).Key;
+            Console.Clear();
+            switch (raceChoice)
+            {
+                case ConsoleKey.D1:
+                case ConsoleKey.H:
+                    isCustomizing = false;
+                    playerRace = Race.Human;
+                    break;
+
+                case ConsoleKey.D2:
+                case ConsoleKey.E:
+                    isCustomizing = false;
+                    playerRace = Race.Elf;
+                    break;
+
+                case ConsoleKey.D3:
+                case ConsoleKey.D:
+                    playerRace = Race.Dwarf;
+                    isCustomizing = false;
+                    break;
+                default:
+                    Console.Clear();
+                    Console.WriteLine("!! Invalid input, please try again. !!\n");
+                    break;
+            }
+            } while (isCustomizing);
+            
+            Console.Clear();
 
             //Test objects.
             Weapon firstSword = new Weapon("Placeholder Sword", "A default weapon for testing the program.", 3, 8, 10);
-            Player player = new Player("Player", firstSword, 70, 5, 40, 40);
-
-            Monster Bard = new Monster("Screecher", "A nimble and frail creature with long hair. It carries a wooden bludgeon that lets out a whimsical noise as it strikes.", 5, 5, 80, 10, 3, 5);
-
-            Monster Dwarf = new Monster("Digger", "Stout, grizly, and foul-scented.", 15, 15, 50, 30, 5, 8);
-
-            Monster Wizard = new Monster("Wizard", "White hair and wrinkled skin give the thin creature an air of wisdom. It leans upon a branch that glows faintly.", 20, 20, 90, 0, 8, 20);
-
-            Monster[] monsters1 = new Monster[] { Bard, Bard, Bard };
-
-            Monster[] monsters2 = new Monster[] { Dwarf, Dwarf, Dwarf };
-
-            Monster[] bosses = new Monster[] { Wizard, Wizard };
-
-            Monster opponent;
+            Player player = new Player("Player", playerRace, firstSword, 70, 5, 40, 40);
+            Monster opponent = new Monster("Placeholder Monster", "Placeholder for testing.", 1, 1, 0, 0, 0, 0);
 
             do
             {
-                Console.WriteLine("Welcome to the Dungeon.");
-
-                if (score < 8)
-                {
-                    if (score > 6)
-                    {
-                        Console.WriteLine("Welcome to the boss room.");
-                        Console.WriteLine("Thou wilt face a hero or a wizard.");
-                        Random roll = new Random();
-                        opponent = bosses[roll.Next(1, 3)];
-                    }
-                    else if (score > 3)
-                    {
-                        Console.WriteLine("Welcome to Lvl 2 Rooms.");
-                        Console.WriteLine("Thou wilt face a Dwarf, Elf, or Knight.");
-                        Random roll = new Random();
-                        opponent = monsters2[roll.Next(1, 4)];
-                    }
-                    else
-                    {
-                        Console.WriteLine("Welcome to Lvl 1 Rooms.");
-                        Console.WriteLine("Thou wilt face a Squire, Bard, or Halfling.");
-                        Random roll = new Random();
-                        opponent = monsters1[roll.Next(1, 4)];
-                    }
-
+                Console.WriteLine(GetRoom());
+                Console.WriteLine("\n!! You encounter a " + opponent.Name + " !!\n");
                     do
                     {
                         Console.WriteLine("Choosest thou an action:\n" +
@@ -80,21 +87,23 @@ namespace Dungeon
                                 {
                                     Console.ForegroundColor = ConsoleColor.Green;
                                     Console.WriteLine(opponent.Name + " has been slain.\n" +
-                                        "Victory is thine!");
+                                        "Victory is thine!\n");
                                     Console.ResetColor();
+                                    Console.WriteLine("Press any key to continue to the next room.");
+                                    Console.ReadKey(false);
                                     score++;
                                     isBattling = false;
                                 }
                                 break;
                             case ConsoleKey.R:
                                 Console.WriteLine("Thou attemptest to flee...");
-                                if (score < 7)
+                                if (score < 12)
                                 {
                                     Console.WriteLine("But thine enemy attacketh thee!");
                                     Battle.DoAttack(opponent, player);
                                     isBattling = false;
                                 }
-                                if (score > 6)
+                                else
                                 {
                                     Console.WriteLine("...But thou canst not run. This battle hath always been thine fate.");
                                 }
@@ -116,7 +125,7 @@ namespace Dungeon
                                 break;
                         }
                     } while (isPlaying && isBattling);
-                }//end if - Game Complete checker.
+
                 if (player.HP <= 0)
                 {
                     do
@@ -143,7 +152,8 @@ namespace Dungeon
                         }//end switch
                     } while (isPlaying);//end do while - Game Over Menu
                 }
-                if (score == 8)
+
+                if (score == 13)
                 {
                     Console.Write("Wilt thou walk into the light?\n" +
                                 "L) Leave the Dungeon.\n" +
