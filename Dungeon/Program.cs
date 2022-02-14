@@ -12,21 +12,25 @@ namespace Dungeon
     {
         static void Main(string[] args)
         {
-            bool isPlaying = true;
-            bool isCustomizing = true;
-            bool isBattling = true;
-            bool isRestarting = false;
+            bool isBattling;
+            bool isPlaying;
+            bool isRestarting;
 
             byte score = 0;
 
-            Weapon starterSword = new Weapon("Sword", "A blade that looks dull. It ain't much, but it'll get the job done.", 3, 6, 0);
-            Weapon starterJavelin = new Weapon("Javelin", "An agile and dependable weapon with a long reach.", 2, 5, 15);
-            Weapon starterAxe = new Weapon("Axe", "A heavy tool for a hard worker. If your blow lands, it could do some serious damage.", 5, 10, -15);
+            Weapon starterSword = new Weapon("Sword", "A blade that looks dull. It ain't much, but it'll get the job done.", 5, 9, 0);
+            Weapon starterJavelin = new Weapon("Javelin", "An agile and dependable weapon with a long reach.", 4, 6, 15);
+            Weapon starterAxe = new Weapon("Axe", "A heavy tool for a hard worker. If your blow lands, it could do some serious damage.", 10, 15, -15);
 
             Player player = new Player("Player", Race.Human, starterSword, 70, 5, 40, 40);
 
+            bool isCustomizing = true;
+
             do
             {
+                isPlaying = true;
+                isRestarting = false;
+
                 Console.WriteLine("Please enter your name...\n");
                 player.Name = Console.ReadLine();
                 Console.Clear();
@@ -77,15 +81,37 @@ namespace Dungeon
 
                 Console.Clear();
 
-                Monster opponent = new Monster("Placeholder Monster", "Placeholder for testing.", 1, 1, 0, 0, 0, 0);
+                Monster placeholder = new Monster("Placeholder Monster", "Placeholder for testing.", 1, 1, 0, 0, 0, 0);
+                Monster miniboss = new Monster("Troll", "A mean brute of the caves. They're slow but tough and deliver deadly blows.", 20, 20, 35, 3, 8, 12);
+                Monster boss = new Monster("Dragon", "A titan of the ancient world. Not many live to this day, but the few that do are terrifying creatures, with tough scales and breath of flames.", 35, 35, 70, 5, 10, 15);
+                Random rollMonster = new Random();
+                Monster[] monsters = { placeholder, miniboss, boss };
+                int randomMonster = 0;
+                Monster opponent = monsters[0];
 
                 do
                 {
-                    Console.WriteLine(GetRoom());
-                    Console.WriteLine("\n!! You encounter a " + opponent.Name + " !!\n");
+                    isBattling = true;
+                    if (score == 12)
+                    {
+                        opponent = monsters[2];
+                    }
+                    else if (score == 9)
+                    {
+                        opponent = monsters[1];
+                    }
+                    else {
+                        randomMonster = rollMonster.Next(0, 1);
+                        opponent = monsters[randomMonster];
+                        Console.WriteLine(GetRoom());
+                        Console.WriteLine("\n!! You encounter a " + opponent.Name + " !!");
+                    }
+
+                    isBattling = true;
+
                     do
                     {
-                        Console.WriteLine("Choose an action:\n" +
+                        Console.WriteLine("\nChoose an action:\n" +
                             "1) Attack\n" +
                             "2) Run Away\n" +
                             "3) View Player Stats\n" +
@@ -100,34 +126,53 @@ namespace Dungeon
                                 Battle.DoBattle(player, opponent);
                                 if (opponent.HP <= 0)
                                 {
+                                    score++;
                                     Console.ForegroundColor = ConsoleColor.Green;
                                     Console.WriteLine(opponent.Name + " has been slain.\n" +
-                                        "Victory!\n");
+                                        "Victory!\n ~ Score: " + score + " ~ \n");
+                                    opponent.HP = opponent.MaxHP;
                                     Console.ResetColor();
-                                    Console.WriteLine("Press any key to continue to the next room.");
+                                    Console.WriteLine("Press any key to continue.");
                                     Console.ReadKey(false);
-                                    score++;
+                                    Console.Clear();
+                                    isBattling = false;
+                                }
+                                if (player.HP <= 0)
+                                {
+                                    Console.WriteLine("It was a fatal blow...");
+                                    Console.WriteLine("Press any key to continue.");
+                                    Console.ReadKey(false);
+                                    Console.Clear();
                                     isBattling = false;
                                 }
                                 break;
                             case ConsoleKey.R:
                             case ConsoleKey.D2:
                                 Console.WriteLine("You attempt to flee...\n");
-                                if (score < 12)
+                                if (score == 9 || score == 12)
                                 {
-                                    Console.WriteLine("But " + opponent.Name + "attacks you as you run!\n");
-                                    Battle.DoAttack(opponent, player);
-                                    isBattling = false;
+                                    Console.WriteLine("...But you can't run. This battle is your destiny.\n");
                                 }
                                 else
                                 {
-                                    Console.WriteLine("...But you can't run. This battle is your destiny.\n");
+                                    Console.WriteLine("But " + opponent.Name + " attacks you as you run!\n");
+                                    Battle.DoAttack(opponent, player);
+                                    Console.WriteLine();
+                                    if (player.HP <= 0)
+                                    {
+                                        Console.WriteLine("It was a fatal blow...");
+                                    }
+                                    Console.WriteLine("Press any key to continue.");
+                                    Console.ReadKey(false);
+                                    Console.Clear();
+                                    isBattling = false;
                                 }
                                 break;
                             case ConsoleKey.P:
                             case ConsoleKey.D3:
                                 Console.Clear();
                                 Console.WriteLine(player);
+                                Console.WriteLine(" ~ Score: {0} ~ \n", score);
                                 break;
                             case ConsoleKey.M:
                             case ConsoleKey.D4:
@@ -142,7 +187,7 @@ namespace Dungeon
                                 Console.WriteLine("!! Invalid input, please try again. !!\n");
                                 break;
                         }
-                    } while (isPlaying && isBattling);//end if Action Menu
+                    } while (isBattling);//end if Action Menu
 
                     if (player.HP <= 0)
                     {
@@ -178,8 +223,49 @@ namespace Dungeon
                             }//end switch
                         } while (isPlaying);//end do while - Game Over Menu
                     }//end if - Game Over Screen
-                } while (isPlaying);//end - Gameplay Loop
-            } while (!isRestarting);//end - Game Loop
+
+
+                    if (score == 13)
+                    {
+                        bool isDeciding = true;
+                        do
+                        {
+                        Console.Clear();
+                        Console.WriteLine("\n ~ Congratulations, you win! ~ \n");
+                            Console.Write("Would you like to play again?\n" +
+                                "R) Restart\n" +
+                                "Q) Quit\n");
+                            ConsoleKey gameOverChoice = Console.ReadKey(false).Key;
+                            Console.Clear();
+                            switch (gameOverChoice)
+                            {
+                                case ConsoleKey.R:
+                                    Console.Clear();
+                                    player.Name = "Player";
+                                    player.PlayerRace = Race.Human;
+                                    player.EquippedWeapon = starterSword;
+                                    player.HitChance = 70;
+                                    player.Block = 5;
+                                    player.MaxHP = 40;
+                                    player.HP = 40;
+                                    score = 0;
+                                    isRestarting = true;
+                                    isDeciding = false;
+                                    break;
+                                case ConsoleKey.Q:
+                                    Console.Clear();
+                                    isRestarting = false;
+                                    isPlaying = false;
+                                    isDeciding = false;
+                                    break;
+                                default:
+                                    Console.WriteLine("!! Invalid input, please try again. !!");
+                                    break;
+                            }//end switch
+                        } while (isDeciding);
+                    }
+                } while (isPlaying && !isRestarting);//end - Gameplay Loop
+            } while (isRestarting);//end - Game Loop
 
              Console.WriteLine("Thank you for playing!\n");
              Console.WriteLine("Score: " + score);
