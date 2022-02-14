@@ -36,6 +36,8 @@ namespace DungeonLibrary
             MinDmg = minDmg;
         }//end FQCTOR
 
+        public Monster() { }//end default ctor
+
         //METHODS
         public override string ToString()
         {
