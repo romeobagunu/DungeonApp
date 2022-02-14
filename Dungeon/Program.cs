@@ -13,81 +13,96 @@ namespace Dungeon
         static void Main(string[] args)
         {
             bool isPlaying = true;
-            bool isBattling = true;
             bool isCustomizing = true;
+            bool isBattling = true;
+            bool isRestarting = false;
 
             byte score = 0;
 
-            Console.WriteLine("Please enter your name...");
-            string playerName = Console.ReadLine();
-            Console.Clear();
+            Weapon starterSword = new Weapon("Sword", "A blade that looks dull. It ain't much, but it'll get the job done.", 3, 6, 0);
+            Weapon starterJavelin = new Weapon("Javelin", "An agile and dependable weapon with a long reach.", 2, 5, 15);
+            Weapon starterAxe = new Weapon("Axe", "A heavy tool for a hard worker. If your blow lands, it could do some serious damage.", 5, 10, -15);
 
-            Race playerRace = new Race();
-            Console.WriteLine("Welcome, " + playerName + "!\n");
+            Player player = new Player("Player", Race.Human, starterSword, 70, 5, 40, 40);
+
             do
             {
-            Console.WriteLine("Please select a race:\n" +
-                "1) Human\n" +
-                "2) Elf\n" +
-                "3) Dwarf\n");
-            ConsoleKey raceChoice = Console.ReadKey(false).Key;
-            Console.Clear();
-            switch (raceChoice)
-            {
-                case ConsoleKey.D1:
-                case ConsoleKey.H:
-                    isCustomizing = false;
-                    playerRace = Race.Human;
-                    break;
+                Console.WriteLine("Please enter your name...\n");
+                player.Name = Console.ReadLine();
+                Console.Clear();
 
-                case ConsoleKey.D2:
-                case ConsoleKey.E:
-                    isCustomizing = false;
-                    playerRace = Race.Elf;
-                    break;
+                Console.WriteLine("Welcome, " + player.Name + "!\n");
 
-                case ConsoleKey.D3:
-                case ConsoleKey.D:
-                    playerRace = Race.Dwarf;
-                    isCustomizing = false;
-                    break;
-                default:
+                do
+                {
+                    Console.WriteLine("Please select a race:\n" +
+                        "1) Human\n" +
+                        "2) Elf\n" +
+                        "3) Dwarf\n");
+                    ConsoleKey raceChoice = Console.ReadKey(false).Key;
                     Console.Clear();
-                    Console.WriteLine("!! Invalid input, please try again. !!\n");
-                    break;
-            }
-            } while (isCustomizing);
-            
-            Console.Clear();
+                    switch (raceChoice)
+                    {
+                        case ConsoleKey.D1:
+                        case ConsoleKey.H:
+                            isCustomizing = false;
+                            player.PlayerRace = Race.Human;
+                            player.EquippedWeapon = starterSword;
+                            break;
 
-            //Test objects.
-            Weapon firstSword = new Weapon("Placeholder Sword", "A default weapon for testing the program.", 3, 8, 10);
-            Player player = new Player("Player", playerRace, firstSword, 70, 5, 40, 40);
-            Monster opponent = new Monster("Placeholder Monster", "Placeholder for testing.", 1, 1, 0, 0, 0, 0);
+                        case ConsoleKey.D2:
+                        case ConsoleKey.E:
+                            isCustomizing = false;
+                            player.PlayerRace = Race.Elf;
+                            player.EquippedWeapon = starterJavelin;
+                            player.MaxHP = 90;
+                            player.HP = 90;
+                            break;
 
-            do
-            {
-                Console.WriteLine(GetRoom());
-                Console.WriteLine("\n!! You encounter a " + opponent.Name + " !!\n");
+                        case ConsoleKey.D3:
+                        case ConsoleKey.D:
+                            player.PlayerRace = Race.Dwarf;
+                            player.EquippedWeapon = starterAxe;
+                            player.MaxHP = 60;
+                            player.HP = 60;
+                            player.Block = 7;
+                            isCustomizing = false;
+                            break;
+                        default:
+                            Console.Clear();
+                            Console.WriteLine("!! Invalid input, please try again. !!\n");
+                            break;
+                    }
+                } while (isCustomizing);//end do while - Customization
+
+                Console.Clear();
+
+                Monster opponent = new Monster("Placeholder Monster", "Placeholder for testing.", 1, 1, 0, 0, 0, 0);
+
+                do
+                {
+                    Console.WriteLine(GetRoom());
+                    Console.WriteLine("\n!! You encounter a " + opponent.Name + " !!\n");
                     do
                     {
-                        Console.WriteLine("Choosest thou an action:\n" +
-                            "A) Attack\n" +
-                            "R) Run Away\n" +
-                            "P) View Player Stats\n" +
-                            "M) View Monster Stats\n" +
+                        Console.WriteLine("Choose an action:\n" +
+                            "1) Attack\n" +
+                            "2) Run Away\n" +
+                            "3) View Player Stats\n" +
+                            "4) View Monster Stats\n" +
                             "Q) Quit\n");
                         ConsoleKey menuChoice = Console.ReadKey(false).Key;
                         Console.Clear();
                         switch (menuChoice)
                         {
                             case ConsoleKey.A:
+                            case ConsoleKey.D1:
                                 Battle.DoBattle(player, opponent);
                                 if (opponent.HP <= 0)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Green;
                                     Console.WriteLine(opponent.Name + " has been slain.\n" +
-                                        "Victory is thine!\n");
+                                        "Victory!\n");
                                     Console.ResetColor();
                                     Console.WriteLine("Press any key to continue to the next room.");
                                     Console.ReadKey(false);
@@ -96,23 +111,26 @@ namespace Dungeon
                                 }
                                 break;
                             case ConsoleKey.R:
-                                Console.WriteLine("Thou attemptest to flee...");
+                            case ConsoleKey.D2:
+                                Console.WriteLine("You attempt to flee...\n");
                                 if (score < 12)
                                 {
-                                    Console.WriteLine("But thine enemy attacketh thee!");
+                                    Console.WriteLine("But " + opponent.Name + "attacks you as you run!\n");
                                     Battle.DoAttack(opponent, player);
                                     isBattling = false;
                                 }
                                 else
                                 {
-                                    Console.WriteLine("...But thou canst not run. This battle hath always been thine fate.");
+                                    Console.WriteLine("...But you can't run. This battle is your destiny.\n");
                                 }
                                 break;
                             case ConsoleKey.P:
+                            case ConsoleKey.D3:
                                 Console.Clear();
                                 Console.WriteLine(player);
                                 break;
                             case ConsoleKey.M:
+                            case ConsoleKey.D4:
                                 Console.Clear();
                                 Console.WriteLine(opponent);
                                 break;
@@ -121,67 +139,53 @@ namespace Dungeon
                                 isPlaying = false;
                                 break;
                             default:
-                                Console.WriteLine("!! Invalid input, please try again. !!");
+                                Console.WriteLine("!! Invalid input, please try again. !!\n");
                                 break;
                         }
-                    } while (isPlaying && isBattling);
+                    } while (isPlaying && isBattling);//end if Action Menu
 
-                if (player.HP <= 0)
-                {
-                    do
+                    if (player.HP <= 0)
                     {
-                        Console.WriteLine("Game Over.");
-                        Console.Write("Would you like to play again?\n" +
-                            "R) Restart\n" +
-                            "Q) Quit\n");
-                        ConsoleKey gameOverChoice = Console.ReadKey(false).Key;
-                        Console.Clear();
-                        switch (gameOverChoice)
+                        do
                         {
-                            case ConsoleKey.R:
-                                Console.Clear();
-                                score = 0;
-                                break;
-                            case ConsoleKey.Q:
-                                Console.Clear();
-                                isPlaying = false;
-                                break;
-                            default:
-                                Console.WriteLine("!! Invalid input, please try again. !!");
-                                break;
-                        }//end switch
-                    } while (isPlaying);//end do while - Game Over Menu
-                }
-
-                if (score == 13)
-                {
-                    Console.Write("Wilt thou walk into the light?\n" +
-                                "L) Leave the Dungeon.\n" +
-                                "S) Stay in the Dungeon.\n");
-                    ConsoleKey gameOverChoice = Console.ReadKey(false).Key;
-                    Console.Clear();
-                    switch (gameOverChoice)
-                    {
-                        case ConsoleKey.L:
+                            Console.WriteLine("Game Over.");
+                            Console.Write("Would you like to play again?\n" +
+                                "R) Restart\n" +
+                                "Q) Quit\n");
+                            ConsoleKey gameOverChoice = Console.ReadKey(false).Key;
                             Console.Clear();
-                            Console.WriteLine("A new beginning waiteth upon thee.");
-                            isPlaying = false;
-                            break;
-                        case ConsoleKey.S:
-                            isPlaying = true;
-                            score = 0;
-                            Console.Clear();
-                            break;
-                        default:
-                            Console.WriteLine("!! Invalid input, please try again. !!");
-                            break;
-                    }//end switch
-                }
-            } while (isPlaying);
+                            switch (gameOverChoice)
+                            {
+                                case ConsoleKey.R:
+                                    Console.Clear();
+                                    player.Name = "Player";
+                                    player.PlayerRace = Race.Human;
+                                    player.EquippedWeapon = starterSword;
+                                    player.HitChance = 70;
+                                    player.Block = 5;
+                                    player.MaxHP = 40;
+                                    player.HP = 40;
+                                    score = 0;
+                                    isRestarting = true;
+                                    break;
+                                case ConsoleKey.Q:
+                                    Console.Clear();
+                                    isPlaying = false;
+                                    break;
+                                default:
+                                    Console.WriteLine("!! Invalid input, please try again. !!");
+                                    break;
+                            }//end switch
+                        } while (isPlaying);//end do while - Game Over Menu
+                    }//end if - Game Over Screen
+                } while (isPlaying);//end - Gameplay Loop
+            } while (!isRestarting);//end - Game Loop
 
-            Console.WriteLine("Thankest thou for playing!");
-            Console.WriteLine("Score: " + score);
+             Console.WriteLine("Thank you for playing!\n");
+             Console.WriteLine("Score: " + score);
+
         }//end Main()
+
         public static string GetRoom()
         {
             string[] rooms =
