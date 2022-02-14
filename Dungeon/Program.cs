@@ -15,13 +15,19 @@ namespace Dungeon
             bool isBattling;
             bool isPlaying;
             bool isRestarting;
+            bool isChoosing;
 
             byte score = 0;
 
-            Weapon starterSword = new Weapon("Sword", "A blade that looks dull. It ain't much, but it'll get the job done.", 5, 9, 0);
-            Weapon starterJavelin = new Weapon("Javelin", "An agile and dependable weapon with a long reach.", 4, 6, 15);
-            Weapon starterAxe = new Weapon("Axe", "A heavy tool for a hard worker. If your blow lands, it could do some serious damage.", 10, 15, -15);
+            //Weapons
+            Weapon starterSword = new Weapon("Sword", "A blade that looks dull. It ain't much, but it'll get the job done.", 6, 9, 0);
+            Weapon starterJavelin = new Weapon("Javelin", "An agile and dependable weapon with a long reach.", 5, 7, 15);
+            Weapon starterAxe = new Weapon("Axe", "A heavy tool for a hard worker. If your blow lands, it could do some serious damage.", 8, 10, -10);
+            Weapon advSword = new Weapon("Broadsword of a Valiant Hero", "A blade of sharp and durable steel, suitable for a hero.", 8, 12, 5);
+            Weapon advJavelin = new Weapon("Pike of a Graceful Warrior", "A  weapon that whistles through the air and pierces with precision.", 9, 11, 20);
+            Weapon advAxe = new Weapon("Hammer of a Mighty Fighter", "A bulky and dense weapon that would deal a crushing blow.", 10, 15, -15);
 
+            //Default player
             Player player = new Player("Player", Race.Human, starterSword, 70, 5, 40, 40);
 
             bool isCustomizing = true;
@@ -81,17 +87,124 @@ namespace Dungeon
 
                 Console.Clear();
 
+                //Monsters
                 Monster placeholder = new Monster("Placeholder Monster", "Placeholder for testing.", 1, 1, 0, 0, 0, 0);
                 Monster miniboss = new Monster("Troll", "A mean brute of the caves. They're slow but tough and deliver deadly blows.", 20, 20, 35, 3, 8, 12);
                 Monster boss = new Monster("Dragon", "A titan of the ancient world. Not many live to this day, but the few that do are terrifying creatures, with tough scales and breath of flames.", 35, 35, 70, 5, 10, 15);
+
+                //Random Encounter
                 Random rollMonster = new Random();
-                Monster[] monsters = { placeholder, miniboss, boss };
                 int randomMonster = 0;
+                Monster[] monsters = { placeholder, miniboss, boss };
                 Monster opponent = monsters[0];
 
                 do
                 {
                     isBattling = true;
+
+                    //Level Up Logic
+                    switch (score)
+                    {
+                        case 3:
+                        case 6:
+                        case 12:
+                            Console.WriteLine("\n~! Level up! !~\n");
+                            isChoosing = true;
+                            do
+                            {
+                                Console.WriteLine("Please select a stat to upgrade:\n" +
+                                "1) Health +15hp\n" +
+                                "2) Block +2\n" +
+                                "3) Accuracy (Hit Chance) +10%\n");
+
+                                ConsoleKey raceChoice = Console.ReadKey(false).Key;
+                                Console.Clear();
+                                switch (raceChoice)
+                                {
+                                    case ConsoleKey.D1:
+                                    case ConsoleKey.H:
+                                        isChoosing = false;
+                                        player.MaxHP += 15;
+                                        break;
+
+                                    case ConsoleKey.D2:
+                                    case ConsoleKey.E:
+                                        isChoosing = false;
+                                        player.Block += 2;
+                                        break;
+
+                                    case ConsoleKey.D3:
+                                    case ConsoleKey.D:
+                                        isChoosing = false;
+                                        player.HitChance += 10;
+                                        break;
+                                    default:
+                                        Console.Clear();
+                                        Console.WriteLine("!! Invalid input, please try again. !!\n");
+                                        break;
+
+                                }//end switch - Level up choice
+                            } while (isChoosing);//end do while - Level up choice menu
+
+                            player.HP = player.MaxHP;
+                            Console.WriteLine("\nYou have also been restored to max health. Good luck, hero.");
+                            Console.WriteLine("\nPress any key to continue.");
+                            Console.ReadKey(false);
+                            Console.Clear();
+
+                            break;
+
+                        case 10:
+                            Console.WriteLine("\nAs the troll falls to the ground, you take a deep breath and fall to your knee. Looking around, you see the remains of adventurers who had fallen to this mighty foe. The troll had eaten their flesh and discarded their bones - but he collected those 'shiny' weapons in a pile in the corner of his hut.\n" +
+                                "You get up and sort thru, finding some old gear, but some weapons that might improve your chances of slaying the dragon...");
+                            isChoosing = true;
+                            do
+                            {
+                                Console.WriteLine("Please select a new weapon:\n" +
+                                "1) Broadsword of a Valiant Hero\n" +
+                                "2) Pike of a Graceful Warrior\n" +
+                                "3) Hammer of a Mighty Fighter\n");
+
+                                ConsoleKey raceChoice = Console.ReadKey(false).Key;
+                                Console.Clear();
+                                switch (raceChoice)
+                                {
+                                    case ConsoleKey.D1:
+                                    case ConsoleKey.B:
+                                        isChoosing = false;
+                                        player.EquippedWeapon = advSword;
+                                        break;
+
+                                    case ConsoleKey.D2:
+                                    case ConsoleKey.P:
+                                        isChoosing = false;
+                                        player.EquippedWeapon = advJavelin;
+                                        break;
+
+                                    case ConsoleKey.D3:
+                                    case ConsoleKey.D:
+                                        isChoosing = false;
+                                        player.EquippedWeapon = advAxe;
+                                        break;
+                                    default:
+                                        Console.Clear();
+                                        Console.WriteLine("!! Invalid input, please try again. !!\n");
+                                        break;
+
+                                }//end switch - Weapon upgrade choice
+                            } while (isChoosing);//end do while - Weapon Upgrade choice menu.
+
+                            Console.WriteLine("Press any key to continue.");
+                            Console.ReadKey(false);
+                            Console.Clear();
+
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    //Random Encounter Logic
                     if (score == 12)
                     {
                         opponent = monsters[2];
@@ -100,7 +213,9 @@ namespace Dungeon
                     {
                         opponent = monsters[1];
                     }
-                    else {
+                    else
+                    {
+                        Console.Clear();
                         randomMonster = rollMonster.Next(0, 1);
                         opponent = monsters[randomMonster];
                         Console.WriteLine(GetRoom());
@@ -109,6 +224,7 @@ namespace Dungeon
 
                     isBattling = true;
 
+                    //Action Menu
                     do
                     {
                         Console.WriteLine("\nChoose an action:\n" +
@@ -189,6 +305,7 @@ namespace Dungeon
                         }
                     } while (isBattling);//end if Action Menu
 
+                    //Game Over check
                     if (player.HP <= 0)
                     {
                         do
@@ -224,14 +341,14 @@ namespace Dungeon
                         } while (isPlaying);//end do while - Game Over Menu
                     }//end if - Game Over Screen
 
-
+                    //Game Completed check
                     if (score == 13)
                     {
                         bool isDeciding = true;
                         do
                         {
-                        Console.Clear();
-                        Console.WriteLine("\n ~ Congratulations, you win! ~ \n");
+                            Console.Clear();
+                            Console.WriteLine("\n ~ Congratulations, you win! ~ \n");
                             Console.Write("Would you like to play again?\n" +
                                 "R) Restart\n" +
                                 "Q) Quit\n");
@@ -263,12 +380,14 @@ namespace Dungeon
                                     break;
                             }//end switch
                         } while (isDeciding);
-                    }
-                } while (isPlaying && !isRestarting);//end - Gameplay Loop
-            } while (isRestarting);//end - Game Loop
+                    }//end Game Complete check
 
-             Console.WriteLine("Thank you for playing!\n");
-             Console.WriteLine("Score: " + score);
+                } while (isPlaying && !isRestarting);//end - Gameplay Loop - Loads up another room.
+
+            } while (isRestarting);//end - Game Loop - Loads up another run.
+
+            Console.WriteLine("Thank you for playing!\n");
+            Console.WriteLine("Score: " + score);
 
         }//end Main()
 
