@@ -14,6 +14,7 @@ namespace DungeonLibrary
         //PROPS
         public int MaxDmg { get; set; }
         public string Description { get; set; }
+        public int Level { get; set; }
         public int MinDmg
         {
             get { return _minDmg; }
@@ -24,10 +25,11 @@ namespace DungeonLibrary
         }//end MinDmg prop
 
         //CTORS
-        public Monster(string name, string description, int hp, int maxHP, int hitChance, int block, int minDmg, int maxDmg)
+        public Monster(int level, string name, string description, int hp, int maxHP, int hitChance, int block, int minDmg, int maxDmg)
         {
             MaxHP = maxHP;
             MaxDmg = maxDmg;
+            Level = level;
             Name = name;
             Description = description;
             HitChance = hitChance;
@@ -42,9 +44,9 @@ namespace DungeonLibrary
             return string.Format("\n--== MONSTER ==--\n" +
                 "{0}\n" +
                 "HP: {1} of {2}\n" +
-                "Block: {3}\n" +
-                "Hit Chance: {4}\n" +
-                "Damage: {5} to {6}\n" +
+                "Hit Chance: {3}" +
+                "Damage: {4} to {5}\n" +
+                "Block: {6}\n" +
                 "{7}\n",
                 Name,
                 HP,

@@ -27,25 +27,18 @@ namespace DungeonLibrary
         //METHODS
         public override string ToString()
         {
-            return string.Format("\n-=-= PLAYER =-=-\n" +
-                "Name: {0}\n" +
+            return string.Format("-=-= {0} =-=-\n" +
                 "HP: {1} of {2}\n" +
-                "Block: {3}\n" +
-                "Base Hit Chance: {4}\n" +
+                "Base Hit Chance: {3}\n" +
                 "Weapon:\n" +
-                "{5}\n",
+                "{4}\n" +
+                "Block: {5}\n",
                 Name,
                 HP,
                 MaxHP,
-                Block,
                 HitChance,
-                EquippedWeapon);
+                EquippedWeapon,
+                Block);
         }//end override ToString()
-        public override int CalcDamage()
-        {
-            Random roll = new Random();
-            return roll.Next(EquippedWeapon.MinDmg, EquippedWeapon.MaxDmg + 1);
-        }
-
     }//end class
 }//end namespace

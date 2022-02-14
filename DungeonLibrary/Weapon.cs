@@ -30,7 +30,7 @@ namespace DungeonLibrary
         {
             MaxDmg = maxDmg;
             Name = name;
-            Description = description;
+            Description = description,
             BonusHitChance = bonusHitChance;
             MinDmg = minDmg;
         }//end FQCTOR
@@ -41,7 +41,7 @@ namespace DungeonLibrary
             return string.Format("{0}\n" +
                 "Damage: {1} - {2}\n" +
                 "Bonus Hit Chance: {3}%\n" +
-                "{4}",
+                "{4}\n",
                 Name,
                 MinDmg,
                 MaxDmg,
