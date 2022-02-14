@@ -12,12 +12,14 @@ namespace DungeonLibrary
 
         //PROPS
         public Weapon EquippedWeapon { get; set; }
+        public Race PlayerRace { get; set; }
 
         //CTORS
-        public Player(string name, Weapon equippedWeapon, int hitChance, int block, int maxHP, int hp)
+        public Player(string name, Race playerRace, Weapon equippedWeapon, int hitChance, int block, int maxHP, int hp)
         {
             MaxHP = maxHP;
             Name = name;
+            PlayerRace = playerRace;
             EquippedWeapon = equippedWeapon;
             HitChance = hitChance;
             Block = block;
