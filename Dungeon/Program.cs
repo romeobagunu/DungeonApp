@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using DungeonLibrary;
+using MonsterLibrary;
 
 namespace Dungeon
 {
@@ -88,14 +89,35 @@ namespace Dungeon
                 Console.Clear();
 
                 //Monsters
-                Monster placeholder = new Monster("Placeholder Monster", "Placeholder for testing.", 1, 1, 0, 0, 0, 0);
-                Monster miniboss = new Monster("Troll", "A mean brute of the caves. They're slow but tough and deliver deadly blows.", 20, 20, 35, 3, 8, 12);
+
+                //Goblins
+                Monster gremlin = new Goblin();
+                Monster goblin = new Goblin("Goblin Soldier", "A small but viscious creature with a nasty scowl.", 10, 10, 60, 1, 4, 5, true);
+                Monster hobgoblin = new Goblin("Hobgoblin", "A fiend of mischief and malice. He grins as he juggles a jagged dagger.", 13, 13, 90, 0, 6, 6, false);
+                Monster goblinCommander = new Goblin("Goblin Commander", "Its face is painted with an imprint of blood. Its scars and confident posture indicate you are not the first hero to face him in battle.", 15, 15, 70, 1, 6, 8, true);
+
+                //Orcs
+                Monster orc = new Orc();
+                Monster orcPillager = new Orc("Orc Pillager", "This brawny orc glares at you with red eyes through his helmet, which hangs on his long horns.", 15, 15, 70, 1, 3, 5, true, false);
+                Monster orcGolem = new Orc("Golem", "This lumbering creature has thick skin, which will be difficult to penetrate, even with your newfound weapon.", 18, 18, 30, 3, 4, 6, false, true);
+                Monster orcBrute = new Orc("Orc Brute", "This orc wears no armor, and several scars on its chest appear to be self-inflicted, like hash marks counting some achievement. Just how many heroes has he slain with the ball and chain that hangs at his side while he charges towards you?", 20, 20, 70, 1, 7, 10, false, false );
+
+                //Mini-boss: Troll
+                Monster miniboss = new Orc("Troll", "A fierce brute of the caves. They're slow but tough and deliver deadly blows.", 20, 20, 35, 2, 8, 12, false, true);
+
+                //Boss: Dragon
                 Monster boss = new Monster("Dragon", "A titan of the ancient world. Not many live to this day, but the few that do are terrifying creatures, with tough scales and breath of flames.", 35, 35, 70, 5, 10, 15);
 
                 //Random Encounter
                 Random rollMonster = new Random();
                 int randomMonster = 0;
-                Monster[] monsters = { placeholder, miniboss, boss };
+                Monster[] monsters = {
+                    gremlin, gremlin, gremlin, orc, orc,//Encounters 1-3
+                    goblin, goblin, goblin, orcPillager, orcPillager, orcPillager, orcGolem,//Encounters 4-7
+                    miniboss,//Encounter 8
+                    orcPillager, orcPillager, hobgoblin, hobgoblin, hobgoblin, orcBrute, orcBrute, goblinCommander, goblinCommander, //Encounters 9-12
+                    boss //Encounter 13
+                    };
                 Monster opponent = monsters[0];
 
                 do
@@ -106,7 +128,7 @@ namespace Dungeon
                     switch (score)
                     {
                         case 3:
-                        case 6:
+                        case 7:
                         case 12:
                             Console.WriteLine("\n~! Level up! !~\n");
                             isChoosing = true;
@@ -154,7 +176,7 @@ namespace Dungeon
 
                             break;
 
-                        case 10:
+                        case 8:
                             Console.WriteLine("\nAs the troll falls to the ground, you take a deep breath and fall to your knee. Looking around, you see the remains of adventurers who had fallen to this mighty foe. The troll had eaten their flesh and discarded their bones - but he collected those 'shiny' weapons in a pile in the corner of his hut.\n" +
                                 "You get up and sort thru, finding some old gear, but some weapons that might improve your chances of slaying the dragon...");
                             isChoosing = true;
@@ -205,18 +227,40 @@ namespace Dungeon
                     }
 
                     //Random Encounter Logic
-                    if (score == 12)
+                    if (score == 12)//Encounter 13 - Boss
                     {
-                        opponent = monsters[2];
+                        Console.WriteLine("You enter into a grand throne room. The tall pillars bear scratches from the claws of a massive creature. The scent of smoke fills the air, and dust and ash cloud your vision. No corpses remain from the conflict, but legends have told you that many died in the massacre: consumed by fire or crush in the jaws of the dragon.\n" +
+                            "A low growl echoes through the chamber. Your foe emerges from the shadows, its scales rattling with every step towards you.\n" +
+                            "This is your destiny. Good luck, hero.");
+                        opponent = monsters[22];
                     }
-                    else if (score == 9)
+                    else if (score == 7)//Encounter 8 - Mini-boss
                     {
-                        opponent = monsters[1];
+                        Console.WriteLine("In this chamber, the putrid smell of flesh and blood fill your lungs. Many vile meals have been consumed in this room, which the troll has made its home.\n" +
+                            "It emerges from a makeshift hut and spits out the bones of its most recent victim. Its club drags along the ground as it stumbles towards you.\n" +
+                            "Good luck, hero.");
+                        opponent = monsters[12];
                     }
-                    else
+                    else if (score < 4)//Encounters 1-3
                     {
                         Console.Clear();
-                        randomMonster = rollMonster.Next(0, 1);
+                        randomMonster = rollMonster.Next(0, 5);
+                        opponent = monsters[randomMonster];
+                        Console.WriteLine(GetRoom());
+                        Console.WriteLine("\n!! You encounter a " + opponent.Name + " !!");
+                    }
+                    else if (score < 7)//Encounters 4-7
+                    {
+                        Console.Clear();
+                        randomMonster = rollMonster.Next(6, 12);
+                        opponent = monsters[randomMonster];
+                        Console.WriteLine(GetRoom());
+                        Console.WriteLine("\n!! You encounter a " + opponent.Name + " !!");
+                    }
+                    else if (score < 12)//Encounters 9-12
+                    {
+                        Console.Clear();
+                        randomMonster = rollMonster.Next(13, 22);
                         opponent = monsters[randomMonster];
                         Console.WriteLine(GetRoom());
                         Console.WriteLine("\n!! You encounter a " + opponent.Name + " !!");
@@ -265,7 +309,7 @@ namespace Dungeon
                             case ConsoleKey.R:
                             case ConsoleKey.D2:
                                 Console.WriteLine("You attempt to flee...\n");
-                                if (score == 9 || score == 12)
+                                if (score == 7 || score == 12)
                                 {
                                     Console.WriteLine("...But you can't run. This battle is your destiny.\n");
                                 }

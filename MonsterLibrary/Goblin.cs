@@ -13,11 +13,18 @@ namespace MonsterLibrary
         //FIELDS
 
         //PROPS
+        public bool IsEquipped { get; set; }
 
         //CTORS
-        public Goblin(string name, string description, int hp, int maxHP, int hitChance, int block, int minDmg, int maxDmg) : base(name, description, hp, maxHP, hitChance, block, minDmg, maxDmg)
+        public Goblin(string name, string description, int hp, int maxHP, int hitChance, int block, int minDmg, int maxDmg, bool isEquipped) : base(name, description, hp, maxHP, hitChance, block, minDmg, maxDmg)
         {
-
+            IsEquipped = isEquipped;
+            if (IsEquipped)
+            {
+                HitChance += 10;
+                MinDmg += 2;
+                MaxDmg += 3;
+            }
         }
 
         public Goblin()
@@ -30,13 +37,24 @@ namespace MonsterLibrary
             Block = 0;
             HP = 8;
             MinDmg = 2;
+            IsEquipped = false;
         }
 
         //Methods
         public override string ToString()
         {
-            return string.Format(base.ToString());
+            return base.ToString() + (IsEquipped ? "\nThis goblin is equipped with basic armor, a wooden shield, and a club." : "");
         }
+
+        public override int CalcBlock()
+        {
+            int calculatedBlock = Block;
+            if (IsEquipped)
+            {
+                calculatedBlock += calculatedBlock / 4;//25% dmg reduction if has shield + armor.
+            }
+            return calculatedBlock;
+        }//override 
 
     }//end class
 }//end namespace

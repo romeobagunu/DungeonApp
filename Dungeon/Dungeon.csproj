@@ -54,6 +54,10 @@
       <Project>{a501169b-8f11-494e-a449-503fa657c0b0}</Project>
       <Name>DungeonLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MonsterLibrary\MonsterLibrary.csproj">
+      <Project>{44f91a79-4c04-4467-b49d-834e416abb29}</Project>
+      <Name>MonsterLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
