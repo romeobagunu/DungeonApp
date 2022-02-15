@@ -134,12 +134,14 @@ namespace Dungeon
                         case 7:
                         case 12:
 
+                            Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.WriteLine("\n\n~! Level up! !~\n");
 
                             isChoosing = true;
 
                             do
                             {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
                                 Console.WriteLine("Please select a stat to upgrade:\n" +
                                 "1) Health +20hp\n" +
                                 "2) Block +3\n" +
@@ -187,6 +189,7 @@ namespace Dungeon
 
                             player.HP = player.MaxHP;
                             Console.WriteLine("\nYou have also been restored to max health. Good luck, hero.");
+                            Console.ResetColor();
                             Console.WriteLine("\nPress any key to continue.");
                             Console.ReadKey(false);
                             Console.Clear();
