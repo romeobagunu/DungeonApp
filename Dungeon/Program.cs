@@ -561,6 +561,30 @@ ____________________________________
                         do
                         {
                             Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write(@"
+                        .     
+                      ,*     
+                    ,*      
+                  ,P       
+                ,8*       
+              ,dP             
+             d8`                
+           ,d8`               
+          d8P                            
+        ,88P                      
+       d888*       .d88P            
+      d8888b..d888888*          
+    ,888888888888888b.           
+   ,8*;88888P*****788888888ba.    
+  ,8;,8888*        `88888*         
+  )8e888*          ,88888be.      
+ ,d888`           ,8888888***     
+,d88P`           ,8888888Pb.     
+888*            ,88888888**   
+`88            ,888888888    
+ `P           ,8888888888b
+_____________________________");
                             Console.WriteLine("\n ~ Congratulations, you win! ~ \n");
                             Console.Write("Would you like to play again?\n" +
                                 "R) Restart\n" +
