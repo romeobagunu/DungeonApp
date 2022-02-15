@@ -33,24 +33,66 @@ namespace Dungeon
             //Default player
             Player player = new Player("Player", Race.Human, starterSword, 75, 0, 45, 45);
 
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write(@"
+
+                        .     
+                      ,*     
+                    ,*      
+                  ,P       
+                ,8*       
+              ,dP             
+             d8`                
+           ,d8`               
+          d8P                            
+        ,88P                      
+       d888*       .d88P            
+      d8888b..d888888*          
+    ,888888888888888b.           
+   ,8*;88888P*****788888888ba.    
+  ,8;,8888*        `88888*         
+  )8e888*          ,88888be.      
+ ,d888`           ,8888888***     
+,d88P`           ,8888888Pb.     
+888*            ,88888888**   
+`88            ,888888888    
+ `P           ,8888888888b
+______________________________");
+            Console.WriteLine("\n ~ ENTER THE DRAGON DUNGEON ~ \n");
+            Console.ResetColor();
+            Console.WriteLine("\nPress any key to continue.");
+            Console.ReadKey(false);
+            Console.Clear();
+
             do
             {
                 isPlaying = true;
                 isRestarting = false;
                 isCustomizing = true;
 
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Please enter your name...\n");
+                Console.ResetColor();
                 player.Name = Console.ReadLine();
                 Console.Clear();
 
-                Console.WriteLine("Welcome, " + player.Name + "!\n");
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.Write("\n---------------------------------------------------\n");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("!! Welcome, " + player.Name + " !!\n");
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.Write("---------------------------------------------------\n");
+                Console.ResetColor();
 
                 do
                 {
-                    Console.WriteLine("Please select a race:\n" +
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("_____________________\n" +
+                        "Please select a race:\n" +
                         "1) Human\n" +
                         "2) Elf\n" +
                         "3) Dwarf\n");
+                    Console.ResetColor();
                     ConsoleKey raceChoice = Console.ReadKey(false).Key;
                     Console.Clear();
                     switch (raceChoice)
@@ -563,6 +605,7 @@ ____________________________________
                             Console.Clear();
                             Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.Write(@"
+
                         .     
                       ,*     
                     ,*      
@@ -632,11 +675,9 @@ _____________________________");
 ─.█.─█▀█.█▀█.█.▀█.█▀▄　─█.─█▄█.█▄█
 __________________________________");
 
-            Console.WriteLine("\nThank you for playing!\n" +
-                "__________________________________\n");
-
+            Console.WriteLine("\nThank you for playing!\n");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("~~~ Final Score: ~~~" + score);
+            Console.WriteLine("\n__________________________________\n~~~ Final Score: " + score + "~~~\n");
             Console.ResetColor();
             Console.WriteLine();
         }//end Main()
