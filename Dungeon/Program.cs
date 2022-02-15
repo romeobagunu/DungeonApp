@@ -169,35 +169,6 @@ ______________________________");
                 do
                 {
                     isBattling = true;
-                    //Loading Art
-                    Console.Write(@"
-Loading...
-█
-");
-                    System.Threading.Thread.Sleep(750);
-                    Console.Clear();
-                    Console.Write(@"
-Loading...
-███
-");
-                    System.Threading.Thread.Sleep(500);
-                    Console.Clear();
-                    Console.Write(@"
-Loading...
-█████
-");
-                    System.Threading.Thread.Sleep(500);
-                    Console.Clear();
-                    Console.Write(@"
-Loading...
-███████
-");
-                    System.Threading.Thread.Sleep(250);
-                    Console.Clear();
-                    Console.Write(@"
-Done!
-██████████
-");
                     System.Threading.Thread.Sleep(100);
                     Console.Clear();
                     //Level Up Logic
@@ -322,19 +293,52 @@ Done!
                             break;
                     }
 
+                    Console.Clear();
+                    //Loading Art
+                    Console.Write(@"
+Loading...
+█
+");
+                    System.Threading.Thread.Sleep(750);
+                    Console.Clear();
+                    Console.Write(@"
+Loading...
+███
+");
+                    System.Threading.Thread.Sleep(500);
+                    Console.Clear();
+                    Console.Write(@"
+Loading...
+█████
+");
+                    System.Threading.Thread.Sleep(500);
+                    Console.Clear();
+                    Console.Write(@"
+Loading...
+███████
+");
+                    System.Threading.Thread.Sleep(250);
+                    Console.Clear();
+                    Console.Write(@"
+Done!
+██████████
+");
+                    System.Threading.Thread.Sleep(300);
+                    Console.Clear();
+
                     //Random Encounter Logic
                     if (score == 12)//Encounter 13 - Boss
                     {
                         System.Threading.Thread.Sleep(3000);
                         Console.WriteLine("You enter into a grand throne room. The tall pillars bear scratches from the claws of a massive creature. The scent of smoke fills the air, and dust and ash cloud your vision.\n");
                         System.Threading.Thread.Sleep(8000);
-                        Console.Write("No corpses remain from the conflict, but legends have told you that many died in the massacre: consumed by fire or crushed in the jaws of the dragon.\n");
+                        Console.WriteLine("No corpses remain from the conflict, but legends have told you that many died in the massacre: consumed by fire or crushed in the jaws of the dragon.\n");
                         System.Threading.Thread.Sleep(8000);
-                        Console.Write("A low growl echoes through the chamber. Your foe emerges from the shadows, its scales rattling with every step towards you.\n");
+                        Console.WriteLine("A low growl echoes through the chamber. Your foe emerges from the shadows, its scales rattling with every step towards you.\n");
                         System.Threading.Thread.Sleep(8000);
-                        Console.Write("This is your destiny.\n");
+                        Console.WriteLine("This is your destiny.\n");
                         System.Threading.Thread.Sleep(3000);
-                        Console.Write("Good luck, hero.");
+                        Console.WriteLine("Good luck, hero.");
                         System.Threading.Thread.Sleep(3000);
                         opponent = monsters[22];
                         Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -350,9 +354,9 @@ Done!
                         System.Threading.Thread.Sleep(500);
                         Console.WriteLine("In this chamber, the putrid smell of flesh and blood fill your lungs. Many vile meals have been consumed in this room, which the troll has made its home.\n");
                         System.Threading.Thread.Sleep(7000);
-                        Console.Write("It emerges from a makeshift hut and spits out the bones of its most recent victim. Its club drags along the ground as it stumbles towards you.\n");
+                        Console.WriteLine("It emerges from a makeshift hut and spits out the bones of its most recent victim. Its club drags along the ground as it stumbles towards you.\n");
                         System.Threading.Thread.Sleep(5000);
-                        Console.Write("Good luck, hero.\n");
+                        Console.WriteLine("Good luck, hero.\n");
                         System.Threading.Thread.Sleep(3000);
                         opponent = monsters[12];
                         Console.ForegroundColor = ConsoleColor.DarkRed;
