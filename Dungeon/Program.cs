@@ -241,6 +241,7 @@ ______________________________");
                             break;
 
                         case 8:
+                            Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.WriteLine("\nAs the troll falls to the ground, you take a deep breath and fall to your knee. Looking around, you see the remains of adventurers who had fallen to this mighty foe. The troll had eaten their flesh and discarded their bones - but he collected those 'shiny' weapons in a pile in the corner of his hut.\n" +
                                 "You get up and sort thru, finding some old gear, but some weapons that might improve your chances of slaying the dragon...");
                             isChoosing = true;
@@ -276,7 +277,7 @@ ______________________________");
                                         Console.Clear();
                                         Console.ForegroundColor = ConsoleColor.Red;
                                         Console.WriteLine("!! Invalid input, please try again. !!\n");
-                                        Console.ResetColor();
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
                                         break;
 
                                 }//end switch - Weapon upgrade choice
@@ -284,6 +285,7 @@ ______________________________");
 
                             player.HP = player.MaxHP;
                             Console.WriteLine("\nMay your new weapon serve you well. You have also been restored to max health. Good luck, hero.");
+                            Console.ResetColor();
                             Console.WriteLine("\nPress any key to continue.");
                             Console.ReadKey(false);
                             Console.Clear();
@@ -741,7 +743,7 @@ __________________________________");
 
             Console.WriteLine("\nThank you for playing!\n");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\n__________________________________\n~~~ Final Score: " + score + "~~~\n");
+            Console.WriteLine("\n__________________________________\n~~~ Final Score: " + score + " ~~~\n");
             Console.ResetColor();
             Console.WriteLine();
         }//end Main()
