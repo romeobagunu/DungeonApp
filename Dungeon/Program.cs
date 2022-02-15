@@ -337,14 +337,17 @@ namespace Dungeon
                                 {
                                     Random rollDragonAttack = new Random();
                                     int dragonAttack = rollDragonAttack.Next(1, 11);
-                                    if (dragonAttack < 6)
+
+                                    System.Threading.Thread.Sleep(30);
+
+                                    if (dragonAttack <= 4)
                                     {
                                         Console.WriteLine("\nThe dragon raises its talons to strike at you, exposing its underbelly.\n");
                                         opponent.Block = 3;
 
                                         Battle.DoBattle(player, opponent);
-                                    }//end if - 50% of the time, the dragon attempts to strike with its talons, which gives the player a chance at an effective blow.
-                                    else if (dragonAttack < 7)
+                                    }//end if - 40% of the time, the dragon attempts to strike with its talons, which gives the player a chance at an effective blow.
+                                    else if (dragonAttack <= 7)
                                     {
                                         Console.WriteLine("\nThe dragon rears its head far back, as a flame builds behind its teeth. But you can see its weak spot. Go in for a critical hit!\n");
                                         switch (player.PlayerRace)
@@ -353,18 +356,18 @@ namespace Dungeon
                                                 opponent.HitChance = 50;
                                                 break;
                                             case Race.Dwarf:
-                                                opponent.HitChance = 65;
+                                                opponent.HitChance = 66;
                                                 break;
                                             case Race.Elf:
-                                                opponent.HitChance = 35;
+                                                opponent.HitChance = 33;
                                                 break;
                                         }//end switch - Dragon flame breath hit chance varies by player.
                                         opponent.MaxDmg = 35;
-                                        opponent.MinDmg = 27;
+                                        opponent.MinDmg = 30;
                                         opponent.Block = 0;
 
                                         Battle.DoBattle(player, opponent);
-                                    }//end else if - 20% of the time, the dragon attempts to hit the player with flame breath.
+                                    }//end else if - 30% of the time, the dragon attempts to hit the player with flame breath.
                                     else
                                     {
                                         Console.WriteLine("\nThe dragon reels back, showing its scales to protect itself from your blow.\n");
