@@ -487,11 +487,39 @@ namespace Dungeon
                     {
                         do
                         {
-                            Console.WriteLine("Game Over.");
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.Write(@"
+┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+███▀▀▀██┼███▀▀▀███┼███▀█▄█▀███┼██▀▀▀
+██┼┼┼┼██┼██┼┼┼┼┼██┼██┼┼┼█┼┼┼██┼██┼┼┼
+██┼┼┼▄▄▄┼██▄▄▄▄▄██┼██┼┼┼▀┼┼┼██┼██▀▀▀
+██┼┼┼┼██┼██┼┼┼┼┼██┼██┼┼┼┼┼┼┼██┼██┼┼┼
+███▄▄▄██┼██┼┼┼┼┼██┼██┼┼┼┼┼┼┼██┼██▄▄▄
+┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+███▀▀▀███┼▀███┼┼██▀┼██▀▀▀┼██▀▀▀▀██▄┼
+██┼┼┼┼┼██┼┼┼██┼┼██┼┼██┼┼┼┼██┼┼┼┼┼██┼
+██┼┼┼┼┼██┼┼┼██┼┼██┼┼██▀▀▀┼██▄▄▄▄▄▀▀┼
+██┼┼┼┼┼██┼┼┼██┼┼█▀┼┼██┼┼┼┼██┼┼┼┼┼██┼
+███▄▄▄███┼┼┼─▀█▀┼┼─┼██▄▄▄┼██┼┼┼┼┼██▄
+┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼██┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼████▄┼┼┼▄▄▄▄▄▄▄┼┼┼▄████┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼▀▀█▄█████████▄█▀▀┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼█████████████┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼██▀▀▀███▀▀▀██┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼██┼┼┼███┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼█████▀▄▀█████┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼┼███████████┼┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼▄▄▄██┼┼█▀█▀█┼┼██▄▄▄┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼▀▀██┼┼┼┼┼┼┼┼┼┼┼██▀▀┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼▀▀┼┼┼┼┼┼┼┼┼┼┼▀▀┼┼┼┼┼┼┼┼┼┼┼
+____________________________________
+");
                             Console.Write("Would you like to play again?\n" +
                                 "R) Restart\n" +
                                 "Q) Quit\n");
                             ConsoleKey gameOverChoice = Console.ReadKey(false).Key;
+                            Console.ResetColor();
                             Console.Clear();
                             isChoosing = true;
                             switch (gameOverChoice)
@@ -517,6 +545,7 @@ namespace Dungeon
                                     isChoosing = false;
                                     break;
                                 default:
+                                    Console.Clear();
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine("!! Invalid input, please try again. !!\n");
                                     Console.ResetColor();
@@ -572,9 +601,20 @@ namespace Dungeon
 
             } while (isRestarting);//end - Game Loop - Loads up another run.
 
-            Console.WriteLine("Thank you for playing!\n");
-            Console.WriteLine("Score: " + score);
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write(@"
 
+.▀█▀.█▄█.█▀█.█▄.█.█▄▀　█▄█.█▀█.█─█
+─.█.─█▀█.█▀█.█.▀█.█▀▄　─█.─█▄█.█▄█
+__________________________________");
+
+            Console.WriteLine("\nThank you for playing!\n" +
+                "__________________________________\n");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("~~~ Final Score: ~~~" + score);
+            Console.ResetColor();
+            Console.WriteLine();
         }//end Main()
 
         public static string GetRoom()
