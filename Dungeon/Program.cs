@@ -169,6 +169,37 @@ ______________________________");
                 do
                 {
                     isBattling = true;
+                    //Loading Art
+                    Console.Write(@"
+Loading...
+█
+");
+                    System.Threading.Thread.Sleep(750);
+                    Console.Clear();
+                    Console.Write(@"
+Loading...
+███
+");
+                    System.Threading.Thread.Sleep(500);
+                    Console.Clear();
+                    Console.Write(@"
+Loading...
+█████
+");
+                    System.Threading.Thread.Sleep(500);
+                    Console.Clear();
+                    Console.Write(@"
+Loading...
+███████
+");
+                    System.Threading.Thread.Sleep(250);
+                    Console.Clear();
+                    Console.Write(@"
+Done!
+██████████
+");
+                    System.Threading.Thread.Sleep(100);
+                    Console.Clear();
                     //Level Up Logic
                     switch (score)
                     {
@@ -294,17 +325,43 @@ ______________________________");
                     //Random Encounter Logic
                     if (score == 12)//Encounter 13 - Boss
                     {
-                        Console.WriteLine("You enter into a grand throne room. The tall pillars bear scratches from the claws of a massive creature. The scent of smoke fills the air, and dust and ash cloud your vision. No corpses remain from the conflict, but legends have told you that many died in the massacre: consumed by fire or crush in the jaws of the dragon.\n" +
-                            "A low growl echoes through the chamber. Your foe emerges from the shadows, its scales rattling with every step towards you.\n" +
-                            "This is your destiny. Good luck, hero.");
+                        System.Threading.Thread.Sleep(3000);
+                        Console.WriteLine("You enter into a grand throne room. The tall pillars bear scratches from the claws of a massive creature. The scent of smoke fills the air, and dust and ash cloud your vision.\n");
+                        System.Threading.Thread.Sleep(8000);
+                        Console.Write("No corpses remain from the conflict, but legends have told you that many died in the massacre: consumed by fire or crushed in the jaws of the dragon.\n");
+                        System.Threading.Thread.Sleep(8000);
+                        Console.Write("A low growl echoes through the chamber. Your foe emerges from the shadows, its scales rattling with every step towards you.\n");
+                        System.Threading.Thread.Sleep(8000);
+                        Console.Write("This is your destiny.\n");
+                        System.Threading.Thread.Sleep(3000);
+                        Console.Write("Good luck, hero.");
+                        System.Threading.Thread.Sleep(3000);
                         opponent = monsters[22];
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write("\n---------------------------------------------------\n");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("!! You encounter " + opponent.Name + " !!\n");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write("---------------------------------------------------\n");
+                        Console.ResetColor();
                     }
                     else if (score == 7)//Encounter 8 - Mini-boss
                     {
-                        Console.WriteLine("In this chamber, the putrid smell of flesh and blood fill your lungs. Many vile meals have been consumed in this room, which the troll has made its home.\n" +
-                            "It emerges from a makeshift hut and spits out the bones of its most recent victim. Its club drags along the ground as it stumbles towards you.\n" +
-                            "Good luck, hero.");
+                        System.Threading.Thread.Sleep(500);
+                        Console.WriteLine("In this chamber, the putrid smell of flesh and blood fill your lungs. Many vile meals have been consumed in this room, which the troll has made its home.\n");
+                        System.Threading.Thread.Sleep(7000);
+                        Console.Write("It emerges from a makeshift hut and spits out the bones of its most recent victim. Its club drags along the ground as it stumbles towards you.\n");
+                        System.Threading.Thread.Sleep(5000);
+                        Console.Write("Good luck, hero.\n");
+                        System.Threading.Thread.Sleep(3000);
                         opponent = monsters[12];
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write("\n---------------------------------------------------\n");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("!! You encounter " + opponent.Name + " !!\n");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write("---------------------------------------------------\n");
+                        Console.ResetColor();
                     }
                     else if (score <= 2)//Encounters 1-3
                     {
@@ -315,6 +372,7 @@ ______________________________");
                         System.Threading.Thread.Sleep(30);
                         opponent = monsters[randomMonster];
                         Console.WriteLine(GetRoom());
+                        System.Threading.Thread.Sleep(1500);
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.Write("\n---------------------------------------------------\n");
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -332,6 +390,7 @@ ______________________________");
                         System.Threading.Thread.Sleep(30);
                         opponent = monsters[randomMonster];
                         Console.WriteLine(GetRoom());
+                        System.Threading.Thread.Sleep(1500);
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.Write("\n---------------------------------------------------\n");
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -349,6 +408,7 @@ ______________________________");
                         System.Threading.Thread.Sleep(30);
                         opponent = monsters[randomMonster];
                         Console.WriteLine(GetRoom());
+                        System.Threading.Thread.Sleep(1500);
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.Write("\n---------------------------------------------------\n");
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -469,8 +529,8 @@ ______________________________");
                                 }//Monster defeated check.
                                 if (player.HP <= 0)
                                 {
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("\nIt was a fatal blow...\n");
+                                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                                    Console.WriteLine("\n!! It was a FATAL blow... !!\n");
                                     Console.ResetColor();
                                     Console.WriteLine("Press any key to continue.");
                                     Console.ReadKey(false);
