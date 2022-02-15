@@ -23,7 +23,7 @@ namespace Dungeon
 
             //Weapons
             Weapon starterSword = new Weapon("Sword", "A blade that looks dull. It ain't much, but it'll get the job done.", 6, 11, 0);
-            Weapon starterJavelin = new Weapon("Javelin", "An agile and dependable weapon with a long reach.", 7, 8, 15);
+            Weapon starterJavelin = new Weapon("Javelin", "An agile and dependable weapon with a long reach.", 7, 8, 20);
             Weapon starterAxe = new Weapon("Axe", "A heavy tool for a hard worker. If your blow lands, it could do some serious damage.", 11, 13, -20);
 
             Weapon advSword = new Weapon("Broadsword of a Valiant Hero", "A blade of sharp and durable steel, suitable for a hero.", 12, 17, 10);
@@ -96,21 +96,21 @@ namespace Dungeon
 
                 //Goblins
                 Monster gremlin = new Goblin();
-                Monster goblin = new Goblin("Goblin Soldier", "A small but viscious creature with a nasty scowl.", 10, 10, 80, 0, 10, 13, true);
-                Monster hobgoblin = new Goblin("Hobgoblin", "A fiend of mischief and malice. He grins as he juggles a jagged dagger.", 13, 13, 90, 1, 16, 16, false);
-                Monster goblinCommander = new Goblin("Goblin Commander", "Its face is painted with an imprint of blood. Its scars and confident posture indicate you are not the first hero to face him in battle.", 17, 17, 80, 2, 14, 17, true);
+                Monster goblin = new Goblin("GOBLIN SOLDIER", "A small but viscious creature with a nasty scowl.", 10, 10, 80, 0, 10, 13, true);
+                Monster hobgoblin = new Goblin("HOBGOBLIN", "A fiend of mischief and malice. He grins as he juggles a jagged dagger.", 13, 13, 90, 1, 16, 16, false);
+                Monster goblinCommander = new Goblin("GOBLIN COMMANDER", "Its face is painted with an imprint of blood. Its scars and confident posture indicate you are not the first hero to face him in battle.", 17, 17, 80, 2, 14, 17, true);
 
                 //Orcs
                 Monster orc = new Orc();
-                Monster orcPillager = new Orc("Orc Pillager", "This brawny orc glares at you with red eyes through his helmet, which hangs on his long horns.", 15, 15, 70, 0, 9, 15, true, false);
-                Monster orcGolem = new Orc("Golem", "This lumbering creature has thick skin, which will be difficult to penetrate.", 18, 18, 40, 1, 12, 17, false, true);
-                Monster orcBrute = new Orc("Orc Brute", "This orc wears no armor, and several scars on its chest appear to be self-inflicted, like hash marks counting some achievement. Just how many heroes has he slain with the ball and chain that hangs at his side while he charges towards you?", 25, 25, 75, 1, 16, 20, false, false);
+                Monster orcPillager = new Orc("ORC PILLAGER", "This brawny orc glares at you with red eyes through his helmet, which hangs on his long horns.", 15, 15, 70, 0, 9, 15, true, false);
+                Monster orcGolem = new Orc("GOLEM", "This lumbering creature has thick skin, which will be difficult to penetrate.", 18, 18, 40, 1, 12, 17, false, true);
+                Monster orcBrute = new Orc("ORC BRUTE", "This orc wears no armor, and several scars on its chest appear to be self-inflicted, like hash marks counting some achievement. Just how many heroes has he slain with the ball and chain that hangs at his side while he charges towards you?", 25, 25, 75, 1, 16, 20, false, false);
 
                 //Mini-boss: Troll
-                Monster miniboss = new Orc("Troll", "A fierce brute of the caves. They're slow but tough and deliver deadly blows. If you're quick, you've got a good shot at evading him. But be cautious - should the battle drag on, your weariness could prove deadly.", 30, 30, 30, 2, 20, 25, false, true);
+                Monster miniboss = new Orc("TROLL", "A fierce brute of the caves. They're slow but tough and deliver deadly blows. If you're quick, you've got a good shot at evading him. But be cautious - should the battle drag on, your weariness could prove deadly.", 30, 30, 30, 2, 20, 25, false, true);
 
                 //Boss: Dragon
-                Monster boss = new Monster("Dragon", "A titan of the ancient world. Not many live to this day, but the few that do are terrifying creatures, with glittering scales and a sinister gaze. Its talons can shred through the toughest armor, and if you fail to evade its flames, you're toast.", 50, 50, 90, 12, 20, 25);
+                Monster boss = new Monster("DRAGON", "A titan of the ancient world. Not many live to this day, but the few that do are terrifying creatures, with glittering scales and a sinister gaze. Its talons can shred through the toughest armor, and if you fail to evade its flames, you're toast.", 50, 50, 90, 12, 20, 25);
 
                 //Random Encounter
                 Random rollMonster = new Random();
@@ -135,7 +135,7 @@ namespace Dungeon
                         case 12:
 
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine("\n\n~! Level up! !~\n");
+                            Console.WriteLine("\n~! Level up! !~\n");
 
                             isChoosing = true;
 
@@ -273,7 +273,13 @@ namespace Dungeon
                         System.Threading.Thread.Sleep(30);
                         opponent = monsters[randomMonster];
                         Console.WriteLine(GetRoom());
-                        Console.WriteLine("\n!! You encounter a " + opponent.Name + " !!");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write("\n---------------------------------------------------\n");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("!! You encounter " + opponent.Name + " !!\n");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write("---------------------------------------------------\n");
+                        Console.ResetColor();
                     }
                     else if (score <= 6)//Encounters 4-7
                     {
@@ -284,7 +290,13 @@ namespace Dungeon
                         System.Threading.Thread.Sleep(30);
                         opponent = monsters[randomMonster];
                         Console.WriteLine(GetRoom());
-                        Console.WriteLine("\n!! You encounter a " + opponent.Name + " !!");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write("\n---------------------------------------------------\n");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("!! You encounter " + opponent.Name + " !!\n");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write("---------------------------------------------------\n");
+                        Console.ResetColor();
                     }
                     else if (score <= 11)//Encounters 9-12
                     {
@@ -295,7 +307,13 @@ namespace Dungeon
                         System.Threading.Thread.Sleep(30);
                         opponent = monsters[randomMonster];
                         Console.WriteLine(GetRoom());
-                        Console.WriteLine("\n!! You encounter a " + opponent.Name + " !!");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write("\n---------------------------------------------------\n");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("!! You encounter " + opponent.Name + " !!\n");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write("---------------------------------------------------\n");
+                        Console.ResetColor();
                     }
 
                     isBattling = true;

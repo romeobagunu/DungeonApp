@@ -32,7 +32,7 @@ namespace MonsterLibrary
         {
             MaxHP = 8;
             MaxDmg = 8;
-            Name = "Gremlin";
+            Name = "GREMLIN";
             Description = "A mischievous little creature with large eyes and sharp teeth.";
             HitChance = 80;
             Block = 0;

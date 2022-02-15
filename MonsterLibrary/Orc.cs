@@ -37,7 +37,7 @@ namespace MonsterLibrary
         {
             MaxHP = 12;
             MaxDmg = 12;
-            Name = "Orc";
+            Name = "ORC";
             Description = "A brutish creature with yellow eyes and small horns. It clenches its fists. Those knuckles could pack a serious punch!";
             HitChance = 70;
             Block = 0;
