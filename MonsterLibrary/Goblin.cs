@@ -24,19 +24,20 @@ namespace MonsterLibrary
                 HitChance += 10;
                 MinDmg += 2;
                 MaxDmg += 3;
+                Block += 2;
             }
         }
 
         public Goblin()
         {
             MaxHP = 8;
-            MaxDmg = 3;
+            MaxDmg = 8;
             Name = "Gremlin";
             Description = "A mischievous little creature with large eyes and sharp teeth.";
-            HitChance = 60;
+            HitChance = 80;
             Block = 0;
             HP = 8;
-            MinDmg = 2;
+            MinDmg = 6;
             IsEquipped = false;
         }
 
@@ -45,16 +46,5 @@ namespace MonsterLibrary
         {
             return base.ToString() + (IsEquipped ? "\nThis goblin is equipped with basic armor, a wooden shield, and a club." : "");
         }
-
-        public override int CalcBlock()
-        {
-            int calculatedBlock = Block;
-            if (IsEquipped)
-            {
-                calculatedBlock += calculatedBlock / 4;//25% dmg reduction if has shield + armor.
-            }
-            return calculatedBlock;
-        }//override 
-
     }//end class
 }//end namespace

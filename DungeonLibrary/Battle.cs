@@ -13,16 +13,28 @@ namespace DungeonLibrary
             Random d100 = new Random();
             int roll = d100.Next(1, 101);
             System.Threading.Thread.Sleep(30);
-            if (roll <= (attacker.CalcHitChance() - defender.CalcBlock()))
+            if (roll <= attacker.HitChance)
             {
                 int dmgDealt = attacker.CalcDamage();
-                defender.HP -= dmgDealt;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("{0} hit {1} for {2} damage!",
+                dmgDealt -= defender.Block;
+                System.Threading.Thread.Sleep(30);
+                if (dmgDealt > 0)
+                {
+                    defender.HP -= dmgDealt;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("{0} hit {1} for {2} damage!",
+                        attacker.Name,
+                        defender.Name,
+                        dmgDealt);
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.WriteLine("{0} hit dealt 0 damage to {1}. The blow was blocked!",
                     attacker.Name,
-                    defender.Name,
-                    dmgDealt);
-                Console.ResetColor();
+                    defender.Name);
+                    Console.ResetColor();
+                }
             }
             else
             {

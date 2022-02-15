@@ -27,10 +27,6 @@ namespace DungeonLibrary
         //CTORS
         //Abstract class, no ctors.
         //METHODS
-        public virtual int CalcBlock()
-        {
-            return Block;
-        }//end CalcBlock()
 
         public virtual int CalcHitChance()
         {

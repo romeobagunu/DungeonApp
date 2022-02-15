@@ -25,19 +25,24 @@ namespace MonsterLibrary
                 HitChance -= 10;
                 MinDmg += 3;
                 MaxDmg += 4;
+                Block += 1;
+            }
+            if (IsThickSkinned)
+            {
+                Block += 3;
             }
         }
 
         public Orc()
         {
             MaxHP = 12;
-            MaxDmg = 5;
+            MaxDmg = 12;
             Name = "Orc";
             Description = "A brutish creature with yellow eyes and small horns. It clenches its fists. Those knuckles could pack a serious punch!";
             HitChance = 70;
             Block = 0;
             HP = 12;
-            MinDmg = 3;
+            MinDmg = 8;
             IsEquipped = false;
         }
 
@@ -45,21 +50,6 @@ namespace MonsterLibrary
         public override string ToString()
         {
             return base.ToString() + (IsEquipped ? "\nThis orc is equipped with armor, a shield, and a club." : "");
-        }
-
-        public override int CalcBlock()
-        {
-            int calculatedBlock = Block;
-            if (IsEquipped)
-            {
-                calculatedBlock += calculatedBlock / 4;//25% dmg reduction if has shield + armor. (Orc Pillager)
-            }
-            if (IsThickSkinned)
-            {
-                calculatedBlock += calculatedBlock / 3;//33% dmg reduction if thick skinned. (Troll, Golem)
-            }
-            return calculatedBlock;
-        }//override 
-
-    }
-}
+        }//end override ToString()
+    }//end class
+}//end namespace
