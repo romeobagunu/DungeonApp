@@ -165,7 +165,7 @@ namespace Dungeon
 
                                     case ConsoleKey.D3:
                                     case ConsoleKey.D:
-                                        if (player.HitChance > 100)
+                                        if (player.HitChance + player.EquippedWeapon.BonusHitChance > 100)
                                         {
                                             player.HitChance = 100;
                                             Console.Clear();
@@ -333,7 +333,7 @@ namespace Dungeon
                         {
                             case ConsoleKey.A:
                             case ConsoleKey.D1:
-                                if (opponent.Name == "Dragon")
+                                if (opponent.Name == "DRAGON")
                                 {
                                     Random rollDragonAttack = new Random();
                                     int dragonAttack = rollDragonAttack.Next(1, 11);
@@ -378,7 +378,7 @@ namespace Dungeon
                                     opponent.MinDmg = 20;
 
                                 }//end if - Dragon boss fight
-                                else if (opponent.Name == "Troll")
+                                else if (opponent.Name == "TROLL")
                                 {
                                     switch (player.PlayerRace)
                                     {
@@ -403,19 +403,30 @@ namespace Dungeon
                                 if (opponent.HP <= 0)
                                 {
                                     score++;
+                                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                    Console.Write("\n---------------------------------------------------\n");
                                     Console.ForegroundColor = ConsoleColor.Green;
-                                    Console.WriteLine(opponent.Name + " has been slain.\n" +
-                                        "Victory!\n ~ Score: " + score + " ~ \n");
-                                    opponent.HP = opponent.MaxHP;
+                                    Console.Write("!! " + opponent.Name + " has been slain. !!\n");
+                                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                    Console.Write("---------------------------------------------------\n");
+
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                    Console.WriteLine("\n~! Score: " + score + " !~\n");
+
                                     Console.ResetColor();
                                     Console.WriteLine("Press any key to continue.");
                                     Console.ReadKey(false);
                                     Console.Clear();
+
+                                    opponent.HP = opponent.MaxHP;//Resets Monster Object HP in case it is rolled again.
+
                                     isBattling = false;
                                 }//Monster defeated check.
                                 if (player.HP <= 0)
                                 {
-                                    Console.WriteLine("It was a fatal blow...");
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("\nIt was a fatal blow...\n");
+                                    Console.ResetColor();
                                     Console.WriteLine("Press any key to continue.");
                                     Console.ReadKey(false);
                                     Console.Clear();

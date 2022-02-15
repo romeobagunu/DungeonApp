@@ -32,8 +32,8 @@ namespace DungeonLibrary
             return string.Format("\n-=-= PLAYER =-=-\n" +
                 "Name: {0}\n" +
                 "HP: {1} of {2}\n" +
-                "Block: {3}\n" +
-                "Base Hit Chance: {4}\n" +
+                "Block: -{3}dmg reduction\n" +
+                "Base Hit Chance: {4}%\n" +
                 "Weapon:\n" +
                 "{5}\n",
                 Name,
@@ -48,6 +48,9 @@ namespace DungeonLibrary
             Random roll = new Random();
             return roll.Next(EquippedWeapon.MinDmg, EquippedWeapon.MaxDmg + 1);
         }
-
+        public override int CalcHitChance()
+        {
+            return HitChance + EquippedWeapon.BonusHitChance;
+        }
     }//end class
 }

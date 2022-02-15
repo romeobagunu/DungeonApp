@@ -44,17 +44,17 @@ namespace DungeonLibrary
             return string.Format("\n--== MONSTER ==--\n" +
                 "{0}\n" +
                 "HP: {1} of {2}\n" +
-                "Block: {3}\n" +
+                "Block: -{3}dmg reduction\n" +
                 "Hit Chance: {4}\n" +
                 "Damage: {5} to {6}\n" +
                 "{7}\n",
                 Name,
                 HP,
                 MaxHP,
+                Block,
                 HitChance,
                 MinDmg,
                 MaxDmg,
-                Block,
                 Description);
         }//end override ToString()
 

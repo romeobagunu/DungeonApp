@@ -12,12 +12,18 @@ namespace DungeonLibrary
         {
             Random d100 = new Random();
             int roll = d100.Next(1, 101);
+
+            int attackerHitChance = attacker.CalcHitChance();
+
             System.Threading.Thread.Sleep(30);
-            if (roll <= attacker.HitChance)
+
+            if (roll <= attackerHitChance)
             {
                 int dmgDealt = attacker.CalcDamage();
                 dmgDealt -= defender.Block;
+
                 System.Threading.Thread.Sleep(30);
+
                 if (dmgDealt > 0)
                 {
                     defender.HP -= dmgDealt;
@@ -33,7 +39,6 @@ namespace DungeonLibrary
                     Console.WriteLine("{0} hit dealt 0 damage to {1}. The blow was blocked!",
                     attacker.Name,
                     defender.Name);
-                    Console.ResetColor();
                 }
             }
             else
