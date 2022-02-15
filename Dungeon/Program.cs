@@ -83,7 +83,9 @@ namespace Dungeon
                             break;
                         default:
                             Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("!! Invalid input, please try again. !!\n");
+                            Console.ResetColor();
                             break;
                     }
                 } while (isCustomizing);//end do while - Race choice
@@ -125,17 +127,17 @@ namespace Dungeon
                 do
                 {
                     isBattling = true;
-
-                    System.Threading.Thread.Sleep(30);
-
                     //Level Up Logic
                     switch (score)
                     {
                         case 3:
                         case 7:
                         case 12:
-                            Console.WriteLine("\n~! Level up! !~\n");
+
+                            Console.WriteLine("\n\n~! Level up! !~\n");
+
                             isChoosing = true;
+
                             do
                             {
                                 Console.WriteLine("Please select a stat to upgrade:\n" +
@@ -175,7 +177,9 @@ namespace Dungeon
                                         break;
                                     default:
                                         Console.Clear();
+                                        Console.ForegroundColor = ConsoleColor.Red;
                                         Console.WriteLine("!! Invalid input, please try again. !!\n");
+                                        Console.ResetColor();
                                         break;
 
                                 }//end switch - Level up choice
@@ -223,7 +227,9 @@ namespace Dungeon
                                         break;
                                     default:
                                         Console.Clear();
+                                        Console.ForegroundColor = ConsoleColor.Red;
                                         Console.WriteLine("!! Invalid input, please try again. !!\n");
+                                        Console.ResetColor();
                                         break;
 
                                 }//end switch - Weapon upgrade choice
@@ -434,7 +440,9 @@ namespace Dungeon
                                 isRestarting = false;
                                 break;
                             default:
+                                Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("!! Invalid input, please try again. !!\n");
+                                Console.ResetColor();
                                 break;
                         }
                     } while (isBattling);//end if Action Menu
@@ -474,7 +482,9 @@ namespace Dungeon
                                     isChoosing = false;
                                     break;
                                 default:
-                                    Console.WriteLine("!! Invalid input, please try again. !!");
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("!! Invalid input, please try again. !!\n");
+                                    Console.ResetColor();
                                     break;
                             }//end switch
                         } while (isChoosing);//end do while - Game Over Menu
@@ -515,7 +525,9 @@ namespace Dungeon
                                     isDeciding = false;
                                     break;
                                 default:
-                                    Console.WriteLine("!! Invalid input, please try again. !!");
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("!! Invalid input, please try again. !!\n");
+                                    Console.ResetColor();
                                     break;
                             }//end switch
                         } while (isDeciding);
