@@ -13,14 +13,20 @@ namespace Dungeon
     {
         static void Main(string[] args)
         {
+
+            #region Menu and Score Variables
+            //Menu Bools
+            bool isCustomizing;
             bool isBattling;
             bool isChoosing;
-            bool isCustomizing;
             bool isPlaying;
             bool isRestarting;
 
+            //Score Counter
             byte score = 0;
+            #endregion
 
+            #region Weapon and Player Instantiations
             //Weapons
             Weapon starterSword = new Weapon("Sword", "A blade that looks dull. It ain't much, but it'll get the job done.", 6, 11, 0);
             Weapon starterJavelin = new Weapon("Javelin", "An agile and dependable weapon with a long reach.", 7, 8, 20);
@@ -30,46 +36,49 @@ namespace Dungeon
             Weapon advJavelin = new Weapon("Pike of a Graceful Warrior", "A  weapon that whistles through the air and pierces with precision.", 15, 15, 30);
             Weapon advAxe = new Weapon("Hammer of a Mighty Fighter", "A bulky and dense weapon that would deal a crushing blow.", 14, 22, -25);
 
-            //Default player
+            //Player
             Player player = new Player("Player", Race.Human, starterSword, 75, 0, 45, 45);
+            #endregion
 
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Write(@"
 
-                        .     
-                      ,*     
-                    ,*      
-                  ,P       
-                ,8*       
-              ,dP             
-             d8`                
-           ,d8`               
-          d8P                            
-        ,88P                      
-       d888*       .d88P            
-      d8888b..d888888*          
-    ,888888888888888b.           
-   ,8*;88888P*****788888888ba.    
-  ,8;,8888*        `88888*         
-  )8e888*          ,88888be.      
- ,d888`           ,8888888***     
-,d88P`           ,8888888Pb.     
-888*            ,88888888**   
-`88            ,888888888    
- `P           ,8888888888b
-______________________________");
+                            .     
+                          ,*     
+                        ,*      
+                      ,P       
+                    ,8*       
+                  ,dP             
+                 d8`                
+               ,d8`               
+              d8P                            
+            ,88P                      
+           d888*       .d88P            
+          d8888b..d888888*          
+        ,888888888888888b.           
+       ,8*;88888P*****788888888ba.    
+      ,8;,8888*        `88888*         
+      )8e888*          ,88888be.      
+     ,d888`           ,8888888***     
+    ,d88P`           ,8888888Pb.     
+    888*            ,88888888**   
+    `88            ,888888888    
+     `P           ,8888888888b
+_____________________________________");
             Console.WriteLine("\n ~ ENTER THE DRAGON DUNGEON ~ \n");
             Console.ResetColor();
             Console.WriteLine("\nPress any key to continue.");
             Console.ReadKey(false);
             Console.Clear();
 
+            #region Game Loop
             do
             {
                 isPlaying = true;
                 isRestarting = false;
-                isCustomizing = true;
 
+                #region Player Customization
+                isCustomizing = true;
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Please enter your name...\n");
                 Console.ResetColor();
@@ -131,11 +140,10 @@ ______________________________");
                             break;
                     }
                 } while (isCustomizing);//end do while - Race choice
-
                 Console.Clear();
+                #endregion
 
-                //Monsters
-
+                #region Monster Instantiations
                 //Goblins
                 Monster gremlin = new Goblin();
                 Monster goblin = new Goblin("GOBLIN SOLDIER", "A small but viscious creature with a nasty scowl.", 10, 10, 80, 0, 10, 13, true);
@@ -153,8 +161,9 @@ ______________________________");
 
                 //Boss: Dragon
                 Monster boss = new Monster("DRAGON", "A titan of the ancient world. Not many live to this day, but the few that do are terrifying creatures, with glittering scales and a sinister gaze. Its talons can shred through the toughest armor, and if you fail to evade its flames, you're toast.", 50, 50, 90, 12, 20, 25);
+                #endregion
 
-                //Random Encounter
+                #region Random Object and Monster Array
                 Random rollMonster = new Random();
                 int randomMonster = 0;
                 Monster[] monsters = {
@@ -165,13 +174,16 @@ ______________________________");
                     boss //Encounter 13
                     };
                 Monster opponent = monsters[0];
+                #endregion
 
+                #region Gameplay
                 do
                 {
                     isBattling = true;
                     System.Threading.Thread.Sleep(100);
                     Console.Clear();
-                    //Level Up Logic
+
+                    //Level Up Logic + Troll Loot Drop
                     switch (score)
                     {
                         case 3:
@@ -295,8 +307,9 @@ ______________________________");
                             break;
                     }
 
+                    //Loading Art Animation
+                    #region Loading Art
                     Console.Clear();
-                    //Loading Art
                     Console.Write(@"
 Loading...
 █
@@ -327,8 +340,10 @@ Done!
 ");
                     System.Threading.Thread.Sleep(300);
                     Console.Clear();
+                    #endregion
 
                     //Random Encounter Logic
+                    #region Random Encounters
                     if (score == 12)//Encounter 13 - Boss
                     {
                         System.Threading.Thread.Sleep(3000);
@@ -423,8 +438,7 @@ Done!
                         Console.Write("---------------------------------------------------\n");
                         Console.ResetColor();
                     }
-
-                    isBattling = true;
+                    #endregion  
 
                     //Action Menu
                     do
@@ -588,9 +602,9 @@ Done!
                                 Console.ResetColor();
                                 break;
                         }
-                    } while (isBattling);//end if Action Menu
+                    } while (isBattling);
 
-                    //Game Over check
+                    //Game Over Check
                     if (player.HP <= 0)
                     {
                         do
@@ -660,7 +674,7 @@ ____________________________________
                                     break;
                             }//end switch
                         } while (isChoosing);//end do while - Game Over Menu
-                    }//end if - Game Over Screen
+                    }
 
                     //Game Completed check
                     if (score == 13)
@@ -731,9 +745,12 @@ _____________________________");
                     }//end Game Complete check
 
                 } while (isPlaying && !isRestarting);//end - Gameplay Loop - Loads up another room.
+                #endregion
 
             } while (isRestarting);//end - Game Loop - Loads up another run.
+            #endregion
 
+            //Thank you for playing!
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.Write(@"
 
@@ -773,6 +790,7 @@ __________________________________");
             int randIndex = rollRoom.Next(rooms.Length);
             string roomDesc = rooms[randIndex];
             return roomDesc;
-        }//end GetRoom()
+        }
+
     }//end class
 }//namespace
