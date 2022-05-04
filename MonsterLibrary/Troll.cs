@@ -22,8 +22,8 @@ namespace MonsterLibrary
             HP = 30;
             HitChance = 30;
             Block = 2;
-            MinDmg = 20;
             MaxDmg = 25;
+            MinDmg = 20;
             IsEquipped = false;
             IsThickSkinned = true;
         }

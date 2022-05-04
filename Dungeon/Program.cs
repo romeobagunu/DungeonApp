@@ -25,9 +25,10 @@ namespace Dungeon
 
             //Score Counter
             byte score = 0;
+            //Change initial value of score to test different stages in the game.
             #endregion
 
-            #region Weapon and Player Instantiations
+            #region Instantiations
             //Weapons
             Weapon starterSword = new Weapon("Sword", "A blade that looks dull. It ain't much, but it'll get the job done.", 6, 11, 0);
             Weapon starterJavelin = new Weapon("Javelin", "An agile and dependable weapon with a long reach.", 7, 8, 20);
@@ -39,6 +40,8 @@ namespace Dungeon
 
             //Player
             Player player = new Player("Player", Race.Human, starterSword, 75, 0, 45, 45);
+
+
             #endregion
 
             Screen.RenderWelcome();
@@ -355,71 +358,17 @@ namespace Dungeon
                         {
                             case ConsoleKey.A:
                             case ConsoleKey.D1:
-                                if (opponent.Name == "DRAGON")
+                                if (opponent.GetType().Equals(typeof(Dragon)))
                                 {
-                                    Random rollDragonAttack = new Random();
-                                    int dragonAttack = rollDragonAttack.Next(1, 11);
-
-                                    System.Threading.Thread.Sleep(30);
-
-                                    if (dragonAttack <= 4)
-                                    {
-                                        Console.WriteLine("\nThe dragon raises its talons to strike at you, exposing its underbelly.\n");
-                                        opponent.Block = 3;
-
-                                        Battle.DoBattle(player, opponent);
-                                    }//end if - 40% of the time, the dragon attempts to strike with its talons, which gives the player a chance at an effective blow.
-                                    else if (dragonAttack <= 7)
-                                    {
-                                        Console.WriteLine("\nThe dragon rears its head far back, as a flame builds behind its teeth. But you can see its weak spot. Go in for a critical hit!\n");
-                                        switch (player.PlayerRace)
-                                        {
-                                            case Race.Human:
-                                                opponent.HitChance = 50;
-                                                break;
-                                            case Race.Dwarf:
-                                                opponent.HitChance = 66;
-                                                break;
-                                            case Race.Elf:
-                                                opponent.HitChance = 33;
-                                                break;
-                                        }//end switch - Dragon flame breath hit chance varies by player.
-                                        opponent.MaxDmg = 35;
-                                        opponent.MinDmg = 30;
-                                        opponent.Block = 0;
-
-                                        Battle.DoBattle(player, opponent);
-                                    }//end else if - 30% of the time, the dragon attempts to hit the player with flame breath.
-                                    else
-                                    {
-                                        Console.WriteLine("\nThe dragon reels back, showing its scales to protect itself from your blow.\n");
-                                        Battle.DoAttack(player, opponent);
-                                    }//end else - 30% of the time, the dragon will take a defensive turn and rely on its scales for protection.
-
-                                    //Resets dragon stats.
-                                    opponent.MaxDmg = 25;
-                                    opponent.Block = 12;
-                                    opponent.HitChance = 90;
-                                    opponent.MinDmg = 20;
-
+                                    Dragon dragon = (Dragon)opponent;
+                                    dragon.RollForAttack(player.PlayerRace);
+                                    Battle.DoBattle(player, dragon);
                                 }//end if - Dragon boss fight
-                                else if (opponent.Name == "TROLL")
+                                else if (opponent.GetType().Equals(typeof(Troll)))
                                 {
-                                    switch (player.PlayerRace)
-                                    {
-                                        case Race.Human:
-                                            opponent.HitChance += 10;
-                                            break;
-                                        case Race.Dwarf:
-                                            opponent.HitChance += 15;
-                                            break;
-                                        case Race.Elf:
-                                            opponent.HitChance += 5;
-                                            break;
-                                    }//end switch - Troll hit chance varies by player race and increases with each combat iteration.
-
-                                    Battle.DoBattle(player, opponent);
-
+                                    Troll troll = (Troll)opponent;
+                                    troll.TirePlayer(player.PlayerRace);
+                                    Battle.DoBattle(player, troll);
                                 }//end else if - Troll mini-boss fight
                                 else
                                 {
