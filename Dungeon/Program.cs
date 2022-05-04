@@ -129,10 +129,10 @@ namespace Dungeon
                 Monster orcBrute = new Orc("ORC BRUTE", "This orc wears no armor, and several scars on its chest appear to be self-inflicted, like hash marks counting some achievement. Just how many heroes has he slain with the ball and chain that hangs at his side while he charges towards you?", 25, 25, 75, 1, 16, 20, false, false);
 
                 //Mini-boss: Troll
-                Monster miniboss = new Orc("TROLL", "A fierce brute of the caves. They're slow but tough and deliver deadly blows. If you're quick, you've got a good shot at evading him. But be cautious - should the battle drag on, your weariness could prove deadly.", 30, 30, 30, 2, 20, 25, false, true);
+                Troll miniboss = new Troll();
 
                 //Boss: Dragon
-                Monster boss = new Monster("DRAGON", "A titan of the ancient world. Not many live to this day, but the few that do are terrifying creatures, with glittering scales and a sinister gaze. Its talons can shred through the toughest armor, and if you fail to evade its flames, you're toast.", 50, 50, 90, 12, 20, 25);
+                Dragon boss = new Dragon();
                 #endregion
 
                 #region Random Object and Monster Array
